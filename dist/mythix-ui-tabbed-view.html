@@ -1,0 +1,81 @@
+<!-- Component style in "document" scope -->
+<style data-for="mythix-tabbed-view">
+  mythix-tabbed-view {
+    display: flex;
+  }
+
+  mythix-tabbed-view > section {
+
+  }
+
+  mythix-tabbed-view > section:not(.active) {
+    display: none;
+  }
+</style>
+
+<!-- Component style in "shadow" scope -->
+<template data-for="mythix-tabbed-view">
+  <style>
+    nav {
+      display: flex;
+    }
+
+    nav .tab {
+      display: flex;
+      flex-shrink: 0;
+      flex-basis: auto;
+      padding: var(--theme-padding, 1rem);
+      cursor: pointer;
+      user-select: none;
+      background-color: transparent;
+      border: none;
+    }
+
+    nav .tab:hover, nav .tab:focus-visible {
+      outline-style: solid;
+      outline-color: var(--theme-secondary-color, rgba(128, 128, 128, 0.25));
+      outline-width: var(--theme-border-width, 2px);
+      opacity: 1.0;
+    }
+
+    nav > .tab.active {
+      opacity: 1.0;
+    }
+
+    nav > .tab:not(.active) {
+      opacity: 0.75;
+    }
+
+    .root-container {
+      display: flex;
+      flex-direction: column;
+    }
+
+    :host([layout="north" i]) .root-container {
+      flex-direction: column;
+    }
+
+    :host([layout="south" i]) .root-container {
+      flex-direction: column-reverse;
+    }
+
+    :host([layout="west" i]) .root-container {
+      flex-direction: row;
+    }
+
+    :host([layout="east" i]) .root-container {
+      flex-direction: row-reverse;
+    }
+
+    .page-container {
+      display: flex;
+    }
+  </style>
+
+  <div class="root-container">
+    <nav data-sort="+attributes.title"></nav>
+    <slot class="page-container" onslotchange="onSlotChange"></slot>
+  </div>
+</template>
+
+<script type="module" src="./mythix-ui-tabbed-view.js"></script>
