@@ -2,7 +2,7 @@
   "name": "mythix-ui-tabbed-view",
   "version": "1.0.1",
   "description": "A tabbed view component for Mythix UI",
-  "main": "lib/index.js",
+  "main": "dist/mythix-ui-tabbed-view.js",
   "type": "module",
   "directories": {
     "lib": "lib"
