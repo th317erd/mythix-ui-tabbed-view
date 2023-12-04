@@ -1,6 +1,6 @@
 {
   "name": "mythix-ui-tabbed-view",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A tabbed view component for Mythix UI",
   "main": "dist/mythix-ui-tabbed-view.js",
   "type": "module",
