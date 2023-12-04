@@ -1,79 +1,158 @@
 <!-- Component style in "document" scope -->
 <style data-for="mythix-tabbed-view">
   mythix-tabbed-view {
+    position: relative;
     display: flex;
   }
 
   mythix-tabbed-view > section {
-
+    display: flex;
+    flex-grow: 1;
+    border-style: solid;
+    border-color: var(--theme-secondary-color, rgba(128, 128, 128, 0.25));
+    border-width: var(--theme-border-width, 2px);
   }
 
   mythix-tabbed-view > section:not(.active) {
     display: none;
+  }
+
+  mythix-tabbed-view > [slot^="tab:"] {
+    user-select: none;
   }
 </style>
 
 <!-- Component style in "shadow" scope -->
 <template data-for="mythix-tabbed-view">
   <style>
-    nav {
+    .tab-container {
+      position: relative;
       display: flex;
+      flex-direction: row;
+      z-index: 1;
     }
 
-    nav .tab {
+    :host([layout="west"]) .tab-container, :host([layout="east"]) .tab-container {
+      flex-direction: column;
+    }
+
+    .tab-container .tab {
+      position: relative;
       display: flex;
       flex-shrink: 0;
       flex-basis: auto;
       padding: var(--theme-padding, 1rem);
-      cursor: pointer;
       user-select: none;
       background-color: transparent;
       border: none;
+      border-style: solid;
+      border-width: var(--theme-border-width, 2px);
+      border-color: transparent;
     }
 
-    nav .tab:hover, nav .tab:focus-visible {
-      outline-style: solid;
+    .tab-container .tab:hover:not(.active), .tab-container .tab:focus-visible {
+      outline-style: dashed;
       outline-color: var(--theme-secondary-color, rgba(128, 128, 128, 0.25));
       outline-width: var(--theme-border-width, 2px);
+      outline-offset: calc(var(--theme-border-width, 2px) * -1);
       opacity: 1.0;
     }
 
-    nav > .tab.active {
+    .tab-container > .tab.active {
       opacity: 1.0;
+      border-style: solid;
+      border-color: var(--theme-secondary-color, rgba(128, 128, 128, 0.25));
     }
 
-    nav > .tab:not(.active) {
+    .tab-container > .tab.active::after {
+      position: absolute;
+      content: ' ';
+      background-color: var(--theme-background-color, white);
+    }
+
+    .tab-container > .tab:not(.active) {
       opacity: 0.75;
+      border-color: transparent;
     }
 
     .root-container {
+      position: relative;
       display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      z-index: 0;
+    }
+
+    :host([layout="north" i]) .root-container, :host(:not([layout])) .root-container {
       flex-direction: column;
     }
 
-    :host([layout="north" i]) .root-container {
-      flex-direction: column;
+    :host([layout="north" i]) .tab-container .tab, :host(:not([layout])) .tab-container .tab {
+      border-bottom-width: 0;
+    }
+
+    :host([layout="north" i]) .tab-container .tab.active::after, :host(:not([layout])) .tab-container .tab.active::after {
+      left: 0;
+      right: 0;
+      top:    100%;
+      bottom: calc(var(--theme-border-width, 2px) * -1);
     }
 
     :host([layout="south" i]) .root-container {
       flex-direction: column-reverse;
     }
 
+    :host([layout="south" i]) .tab-container .tab {
+      border-top-width: 0;
+    }
+
+    :host([layout="south" i]) .tab-container .tab.active::after {
+      left: 0;
+      right: 0;
+      top:    calc(var(--theme-border-width, 2px) * -1);
+      bottom: 100%;
+    }
+
     :host([layout="west" i]) .root-container {
       flex-direction: row;
+    }
+
+    :host([layout="west" i]) .tab-container .tab {
+      border-right-width: 0;
+    }
+
+    :host([layout="west" i]) .tab-container .tab.active::after {
+      left: 100%;
+      right: calc(var(--theme-border-width, 2px) * -1);
+      top:    0;
+      bottom: 0;
     }
 
     :host([layout="east" i]) .root-container {
       flex-direction: row-reverse;
     }
 
+    :host([layout="east" i]) .tab-container .tab {
+      border-left-width: 0;
+    }
+
+    :host([layout="east" i]) .tab-container .tab.active::after {
+      left: calc(var(--theme-border-width, 2px) * -1);
+      right: 100%;
+      top:    0;
+      bottom: 0;
+    }
+
     .page-container {
+      position: relative;
       display: flex;
+      align-items: stretch;
+      overflow: hidden;
     }
   </style>
 
   <div class="root-container">
-    <nav data-sort="+attributes.title"></nav>
+    <nav class="tab-container" data-test="{{this.test}}" data-sort="+attributes.title"></nav>
     <slot class="page-container" onslotchange="onSlotChange"></slot>
   </div>
 </template>
