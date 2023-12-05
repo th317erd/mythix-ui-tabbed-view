@@ -1,6 +1,6 @@
 import { MythixUIComponent, Utils } from 'mythix-ui-core';
 
-export default class MythixUITabbedView extends MythixUIComponent {
+export class MythixUITabbedView extends MythixUIComponent {
   static tagName = 'mythix-tabbed-view';
 
   get $pages() {
@@ -13,6 +13,12 @@ export default class MythixUITabbedView extends MythixUIComponent {
 
   get $nav() {
     return this.$('.tab-container').first()[0];
+  }
+
+  publishContext() {
+    return {
+      funk: 'DUDE!',
+    };
   }
 
   rebuildTabs() {
@@ -36,8 +42,8 @@ export default class MythixUITabbedView extends MythixUIComponent {
       });
 
       pages = pages.sort((a, b) => {
-        let x = Utils.fetch(a, sortKey, a.getAttribute('title') || a.getAttribute('name'));
-        let y = Utils.fetch(b, sortKey, b.getAttribute('title') || b.getAttribute('name'));
+        let x = Utils.fetchPath(a, sortKey, a.getAttribute('title') || a.getAttribute('name'));
+        let y = Utils.fetchPath(b, sortKey, b.getAttribute('title') || b.getAttribute('name'));
 
         // eslint-disable-next-line eqeqeq
         if (x == y)
@@ -56,9 +62,10 @@ export default class MythixUITabbedView extends MythixUIComponent {
           .class(this.classes('tab', { active: isActive }))
           .onClick(this.onTabClicked.bind(this, pageName))
           .dataFor(pageName)
+          .part('tab')
           .tabIndex(index)(
             SLOT.name(`tab:${pageName}`)(
-              SPAN.class('tab-title')(pageElement.getAttribute('title') || `Page ${index + 1}`),
+              SPAN.class('tab-caption').part('tab-caption')(pageElement.getAttribute('title') || `Page ${index + 1}`),
             ),
           );
       });

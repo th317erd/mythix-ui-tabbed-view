@@ -13,7 +13,17 @@
     "test-debug": "node --inspect-brk ./node_modules/.bin/jasmine",
     "test-watch": "watch 'clear ; node ./node_modules/.bin/jasmine' . --wait=2 --interval=1"
   },
-  "keywords": [],
+  "keywords": [
+    "mythix",
+    "mythix-ui",
+    "tabbed-view",
+    "paged-view",
+    "pages",
+    "tabs",
+    "html",
+    "webcomponent",
+    "web"
+  ],
   "author": "Wyatt Greenway",
   "license": "MIT",
   "bugs": {
