@@ -15,12 +15,6 @@ export class MythixUITabbedView extends MythixUIComponent {
     return this.$('.tab-container').first()[0];
   }
 
-  publishContext() {
-    return {
-      funk: 'DUDE!',
-    };
-  }
-
   rebuildTabs() {
     if (!this.$nav)
       return;
