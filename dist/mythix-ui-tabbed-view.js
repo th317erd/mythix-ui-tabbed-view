@@ -4,15 +4,15 @@ export class MythixUITabbedView extends MythixUIComponent {
   static tagName = 'mythix-tabbed-view';
 
   get $pages() {
-    return this.$('section[name]');
+    return this.select('section[name]');
   }
 
   get $tabs() {
-    return this.$('.tab-container .tab');
+    return this.select('.tab-container .tab');
   }
 
   get $nav() {
-    return this.$('.tab-container').first()[0];
+    return this.select('.tab-container').first()[0];
   }
 
   rebuildTabs() {
@@ -51,7 +51,7 @@ export class MythixUITabbedView extends MythixUIComponent {
       let isActive  = pageElement.classList.contains('active');
       let pageName  = pageElement.getAttribute('name');
 
-      return this.build(({ BUTTON, SPAN, SLOT }) => {
+      return this.$build(({ BUTTON, SPAN, SLOT }) => {
         return BUTTON
           .class(this.classes('tab', { active: isActive }))
           .onClick(this.onTabClicked.bind(this, pageName))
@@ -69,8 +69,8 @@ export class MythixUITabbedView extends MythixUIComponent {
   onTabClicked(pageName, event) {
     event.stopPropagation();
 
-    this.$pages.removeClass('active').$(`section[name="${pageName}"]`).addClass('active');
-    this.$tabs.removeClass('active').$(`.tab[data-for="${pageName}"]`).addClass('active');
+    this.$pages.removeClass('active').select(`section[name="${pageName}"]`).addClass('active');
+    this.$tabs.removeClass('active').select(`.tab[data-for="${pageName}"]`).addClass('active');
   }
 
   onSlotChange() {
