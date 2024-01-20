@@ -1,4 +1,4 @@
-import { MythixUIComponent, Utils } from 'mythix-ui-core';
+import { MythixUIComponent, Utils } from '@cdn/mythix-ui-core@1';
 
 export class MythixUITabbedView extends MythixUIComponent {
   static tagName = 'mythix-tabbed-view';
